@@ -12,6 +12,9 @@ export default function FormLogin() {
   const { login, loginAdm }: any = useContext(AuthContext);
   const router = useRouter();
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const toRegister = React.useCallback(() => {
     router.push("/criar-conta");
   }, [router]);
@@ -42,6 +45,8 @@ export default function FormLogin() {
 
       if (data.me == true) {
         loginAdm(data.me);
+        console.log('admin')
+        return;
       }
 
       const emailStore = data.me[0].email;

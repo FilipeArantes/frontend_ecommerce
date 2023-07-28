@@ -16,9 +16,16 @@ export default function DeletarCategoria({
 }: DeletarCategoriaProps) {
   const [showModal, setShowModal] = useState(false);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const handleDelete = async () => {
     try {
-      const requisição = await api.delete(`categoria/${id}`);
+      const requisição = await api.delete(`categoria/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setShowModal(false);
       atualizarDados();
     } catch (error) {

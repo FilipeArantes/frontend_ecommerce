@@ -14,9 +14,16 @@ type ConteudoProps = {
 export default function Conteudo() {
   const [dados, setDados] = useState<ConteudoProps[]>([]);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const atualizarDados = async () => {
     try {
-      const resposta = await api.get("categoria");
+      const resposta = await api.get("categoria", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const json = resposta.data;
       setDados(json);
     } catch (erro) {}
@@ -25,7 +32,11 @@ export default function Conteudo() {
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const resposta = await api.get("categoria");
+        const resposta = await api.get("categoria", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const json = resposta.data;
 
         setDados(json);
@@ -33,7 +44,7 @@ export default function Conteudo() {
     };
 
     fazerRequisicao();
-  }, []);
+  }, [token]);
   return (
     <div className="bg-slate w-screen h-screen pt-12 px-10 flex flex-col ">
       <h1 className="text-3xl ml-6 mb-14">Categorias</h1>

@@ -16,17 +16,24 @@ export default function ValorProdutos({ setValorProduto }: ValorProdutoProps) {
   const idUsuario =
     typeof window !== "undefined" ? localStorage.getItem("idUser") : null;
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const { data } = await api.get(`carrinhoSum/${idUsuario}`);
+        const { data } = await api.get(`carrinhoSum/${idUsuario}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setDados(data);
         setValorProduto(data.sum);
       } catch (erro) {}
     };
 
     fazerRequisicao();
-  }, [idUsuario, setValorProduto]);
+  }, [idUsuario, setValorProduto, token]);
 
   return (
     <div>

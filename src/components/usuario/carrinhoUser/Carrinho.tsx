@@ -7,7 +7,7 @@ type CarrinhoProps = {
   fechar: () => void;
 };
 
-export default function Carrinho({ fechar }: CarrinhoProps) {
+export default function Carrinho({ fechar}: CarrinhoProps) {
   return (
     <div>
       <div className="flex justify-end">

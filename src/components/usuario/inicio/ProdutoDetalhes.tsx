@@ -22,6 +22,9 @@ export default function ProdutoDetalhes() {
   const [dados, setDados] = useState<ConteudoProps[]>([]);
   const [quantidade, setQuantidade] = useState("");
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const router = useRouter();
 
   const { id } = router.query;
@@ -30,7 +33,11 @@ export default function ProdutoDetalhes() {
     const fazerRequisicao = async () => {
       try {
         if (id) {
-          const { data } = await api.get(`produto/${id}`);
+          const { data } = await api.get(`produto/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           setDados(data);
         }
       } catch (erro) {
@@ -39,7 +46,7 @@ export default function ProdutoDetalhes() {
     };
 
     fazerRequisicao();
-  }, [id]);
+  }, [id, token]);
 
   return (
     <div>

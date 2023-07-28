@@ -44,6 +44,9 @@ export default function AlterarProduto({
 
     const data: DataProps = {};
 
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
     if (categoriaSelecionada !== "") {
       data.id_categoria = categoriaSelecionada;
     }
@@ -64,7 +67,14 @@ export default function AlterarProduto({
     }
 
     try {
-      const response = await api.put(`produto/${id}`, data);
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+      const response = await api.put(`produto/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setShowModal(false);
       if ((response.status = 200)) {
         atualizarDados();
@@ -92,7 +102,14 @@ export default function AlterarProduto({
 
   const fazerRequisicao = async () => {
     try {
-      const resposta = await api.get("categoria");
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+      const resposta = await api.get("categoria", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const json = resposta.data;
 
       setCategorias(json);

@@ -15,9 +15,16 @@ export default function RemoverProduto({
   idProduto,
   atualizarDados,
 }: RemoverProdutoProps) {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const handleDelete = async (e: any) => {
     try {
-      const response = await api.delete(`carrinho/${idCarrinho}/${idProduto}`);
+      const response = await api.delete(`carrinho/${idCarrinho}/${idProduto}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       atualizarDados();
       if ((response.status = 200)) {
         Swal.fire({

@@ -1,6 +1,4 @@
-import { api } from "@/src/service/FetchAxios";
 import { useState } from "react";
-import ModalCarrinhoIndividual from "./Carrinho";
 import Carrinho from "./Carrinho";
 
 export default function FinalizarCompraModal() {

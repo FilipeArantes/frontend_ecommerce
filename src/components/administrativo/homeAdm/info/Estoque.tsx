@@ -12,10 +12,18 @@ type EstoqueProps = {
 
 export default function Estoque() {
   const [dados, setDados] = useState<EstoqueProps[]>([]);
+
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const resposta = await api.get("produto");
+        const resposta = await api.get("produto", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const jsonCompleto = resposta.data;
         const primeirosDezItens = jsonCompleto.slice(0, 10);
 
@@ -30,7 +38,7 @@ export default function Estoque() {
     };
 
     fazerRequisicao();
-  }, []);
+  }, [token]);
 
   return (
     <div className="py-12 pr-10 h-screen w-full bg-slate">

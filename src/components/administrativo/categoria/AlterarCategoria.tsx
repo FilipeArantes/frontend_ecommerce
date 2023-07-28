@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 type AlterarCategoriaProps = {
   id: number;
-  atualizarDados: () => void
+  atualizarDados: () => void;
 };
 
 type DataProps = {
@@ -17,10 +17,16 @@ type DataProps = {
   imagem?: string;
 };
 
-export default function AlterarCategoria({ id , atualizarDados}: AlterarCategoriaProps) {
+export default function AlterarCategoria({
+  id,
+  atualizarDados,
+}: AlterarCategoriaProps) {
   const [showModal, setShowModal] = useState(false);
   const [nomeCategoria, setNomeCategoria] = useState("");
   const [imagemCategoria, setimagemCategoria] = useState("");
+  
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const handleSubmit = async () => {
     const data: DataProps = {};
@@ -33,7 +39,11 @@ export default function AlterarCategoria({ id , atualizarDados}: AlterarCategori
     }
 
     try {
-      const response = await api.put(`categoria/${id}`, data);
+      const response = await api.put(`categoria/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       atualizarDados();
       if ((response.status = 200)) {
         atualizarDados();
@@ -63,10 +73,7 @@ export default function AlterarCategoria({ id , atualizarDados}: AlterarCategori
       <Head>
         <title>Administrativo - Categorias</title>
       </Head>
-      <div
-        onClick={openModal}
-        className="cursor-pointer"
-      >
+      <div onClick={openModal} className="cursor-pointer">
         <Image src={IpeAlterar} alt="IpeAdicionar" width={20} />
       </div>
       <div>

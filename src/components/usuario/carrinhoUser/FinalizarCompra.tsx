@@ -30,6 +30,9 @@ export default function FinalizarCompra({
   const nomeUser =
     typeof window !== "undefined" ? localStorage.getItem("nomeUser") : null;
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -49,7 +52,12 @@ export default function FinalizarCompra({
     }
     try {
       const { data } = await api.get<ItensConteudoProps[]>(
-        `carrinho/${idUsuario}`
+        `carrinho/${idUsuario}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       const itens = data.map((item) => ({
@@ -58,10 +66,15 @@ export default function FinalizarCompra({
         id_produto: item.id_produto,
       }));
 
-      const itensData = await api.post("itens", itens);
+      const itensData = await api.post("itens", itens, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const pedido = data.map((item, index) => ({
         produto: {
+          nome: item.nome,
           preco: item.preco_produto,
           id_produto: item.id_produto,
           id_usuario: idUsuario,
@@ -70,7 +83,6 @@ export default function FinalizarCompra({
           quantidade_comprada: item.quantidade,
           forma_pagamento: metodoPagamento,
           email: email,
-          nomeUser: nomeUser,
         },
         endereco: endereco
           ? {
@@ -80,7 +92,11 @@ export default function FinalizarCompra({
           : undefined,
       }));
 
-      const response = await api.post("pedido", pedido);
+      const response = await api.post("pedido", pedido, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status === 200) {
         Swal.fire({
           icon: "success",

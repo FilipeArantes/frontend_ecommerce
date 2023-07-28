@@ -17,23 +17,34 @@ type ConteudoProps = {
 export default function Conteudo() {
   const [dados, setDados] = useState<ConteudoProps[]>([]);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const atualizarDados = useCallback(async () => {
     try {
-      const { data } = await api.get("produto");
+      const { data } = await api.get("produto", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setDados(data);
     } catch (erro) {}
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const { data } = await api.get("produto");
+        const { data } = await api.get("produto", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setDados(data);
       } catch (erro) {}
     };
 
     fazerRequisicao();
-  }, []);
+  }, [token]);
 
   return (
     <div className="bg-slate w-screen h-screen pt-12 px-10 flex flex-col ">

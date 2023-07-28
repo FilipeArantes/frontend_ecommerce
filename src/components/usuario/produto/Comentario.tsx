@@ -20,9 +20,8 @@ export default function Comentario({ produtoId }: ComentarioProps) {
   const id =
     typeof window !== "undefined" ? localStorage.getItem("idUser") : null;
 
-  // useEffect(() => {
-  //   atualizarDados();
-  // }, []);
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   const atualizarDados = async () => {
     try {

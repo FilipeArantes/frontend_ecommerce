@@ -16,6 +16,9 @@ export default function AdicionarCategoria({
   const [nomeCategoria, setNomeCategoria] = useState("");
   const [imagemCategoria, setimagemCategoria] = useState<File | null>(null);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const handleSubmit = async () => {
     const formData = new FormData();
     if (imagemCategoria !== null) {
@@ -24,7 +27,11 @@ export default function AdicionarCategoria({
     formData.append("nome", nomeCategoria);
 
     try {
-      const response = await api.post("categoria", formData);
+      const response = await api.post("categoria", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setShowModal(false);
       atualizarDados();
     } catch (error) {

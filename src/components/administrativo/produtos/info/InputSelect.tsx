@@ -19,10 +19,17 @@ export default function InputSelect({
 }: InputSelectProps) {
   const [categorias, setCategorias] = useState<CategoriaProps[]>([]);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const resposta = await api.get("categoria");
+        const resposta = await api.get("categoria", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const json = resposta.data;
 
         setCategorias(json);
@@ -32,7 +39,7 @@ export default function InputSelect({
     };
 
     fazerRequisicao();
-  }, []);
+  }, [token]);
   return (
     <>
       <label className="mb-2" htmlFor={idName}>

@@ -6,16 +6,23 @@ import { api } from "@/src/service/FetchAxios";
 export default function TotalPedidos() {
   const [count, setCount] = useState(null);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const { data } = await api.get("pedidoCount");
+        const { data } = await api.get("pedidoCount", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setCount(data.count);
       } catch (erro) {}
     };
 
     fazerRequisicao();
-  }, []);
+  }, [token]);
 
   return (
     <div className="flex bg-white w-72 h-28 rounded-xl items-center">

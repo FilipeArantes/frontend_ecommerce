@@ -20,10 +20,17 @@ interface DadosProduto {
 export default function VendasRecentes() {
   const [dados, setDados] = useState<VendasProps[]>([]);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const resposta = await api.get("pedidosRecentes");
+        const resposta = await api.get("pedidosRecentes", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const json = resposta.data;
         const primeirosDezItens = json.slice(0, 6);
         setDados(primeirosDezItens);
@@ -33,7 +40,7 @@ export default function VendasRecentes() {
     };
 
     fazerRequisicao();
-  }, []);
+  }, [token]);
 
   return (
     <>

@@ -43,6 +43,9 @@ export default function AdicionarProduto({
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
     if (
       categoriaSelecionada == "" ||
       nomeProduto == "" ||
@@ -70,7 +73,7 @@ export default function AdicionarProduto({
 
     try {
       const response = await api.post("produto", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
       });
       atualizarDados();
       if ((response.status = 200)) {

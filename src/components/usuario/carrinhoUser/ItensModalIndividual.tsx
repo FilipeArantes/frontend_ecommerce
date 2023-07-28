@@ -17,12 +17,19 @@ export default function ItensModalIndividual() {
   const idUsuario =
     typeof window !== "undefined" ? localStorage.getItem("idUser") : null;
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const [dados, setDados] = useState<ItensConteudoProps[]>([]);
 
   const atualizarDados = async () => {
     try {
       const { data } = await api.get<ItensConteudoProps[]>(
-        `carrinho/${idUsuario}`
+        `carrinho/${idUsuario}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setDados(data);
     } catch (erro) {}
@@ -32,7 +39,11 @@ export default function ItensModalIndividual() {
     const fazerRequisicao = async () => {
       try {
         const { data } = await api.get<ItensConteudoProps[]>(
-          `carrinho/${idUsuario}`
+          `carrinho/${idUsuario}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const ids = data.map((item) => String(item.id_produto));
         setDados(data);
@@ -40,7 +51,7 @@ export default function ItensModalIndividual() {
     };
 
     fazerRequisicao();
-  }, [idUsuario]);
+  }, [idUsuario, token]);
 
   return (
     <div>

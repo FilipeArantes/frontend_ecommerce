@@ -17,6 +17,9 @@ export default function AdicionarCarrinho({
   const idUsuario =
     typeof window !== "undefined" ? localStorage.getItem("idUser") : null;
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const precoPorQuantidade = precoProduto * Number(quantidadeProduto);
 
   const handleAdicionarCarrinho = async () => {
@@ -36,7 +39,11 @@ export default function AdicionarCarrinho({
         preco_produto: precoPorQuantidade,
       };
 
-      const response = await api.post("carrinho", produtoCarrinho);
+      const response = await api.post("carrinho", produtoCarrinho, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status == 200) {
         Swal.fire({
           icon: "success",

@@ -17,9 +17,16 @@ export default function DeletarProduto({
 }: DeletarProdutoProps) {
   const [showModal, setShowModal] = useState(false);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const handleDelete = async () => {
     try {
-      const response = await api.delete(`produto/${id}`);
+      const response = await api.delete(`produto/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setShowModal(false);
       atualizarDados();
       if ((response.status = 200)) {

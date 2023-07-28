@@ -22,9 +22,16 @@ export default function ItensCarrinho() {
   const idUsuario =
     typeof window !== "undefined" ? localStorage.getItem("idUser") : null;
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   const atualizarDados = async () => {
     try {
-      const { data } = await api.get(`carrinho/${idUsuario}`);
+      const { data } = await api.get(`carrinho/${idUsuario}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setDados(data);
     } catch (erro) {}
   };
@@ -32,13 +39,17 @@ export default function ItensCarrinho() {
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const { data } = await api.get(`carrinho/${idUsuario}`);
+        const { data } = await api.get(`carrinho/${idUsuario}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setDados(data);
       } catch (erro) {}
     };
 
     fazerRequisicao();
-  }, [idUsuario]);
+  }, [idUsuario, token]);
 
   const handleIncrement = (index: number) => {
     setDados((prevDados) => {

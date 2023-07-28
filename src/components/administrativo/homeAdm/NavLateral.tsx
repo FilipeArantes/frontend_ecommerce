@@ -49,7 +49,7 @@ const pageData = [
 
 export default function NavLateral({ page }: NavProps) {
   const [currentPage, setCurrentPage] = useState("");
-  const { logout }: any = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   const router = useRouter();
 
