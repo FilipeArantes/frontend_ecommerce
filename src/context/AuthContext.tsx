@@ -24,6 +24,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const loginAdm = (token: string) => {
     window.localStorage.setItem("token", token);
     router.push("administrativo/home");
+    setToken(token);
   };
 
   const login = (
