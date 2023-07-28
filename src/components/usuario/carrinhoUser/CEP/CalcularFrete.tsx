@@ -1,14 +1,17 @@
 import { api } from "@/src/service/FetchAxios";
+import { calcularFrete as calcularFreteValor } from "@/src/util/CalcularFrete";
 import { data } from "autoprefixer";
+import { title } from "process";
 import { useEffect, useState, ChangeEvent } from "react";
+import Swal from "sweetalert2";
 
 type CalcularFreteProps = {
-  valorFrete: string;
+  valorProduto: number;
   setValorFrete: (frete: string) => void;
 };
 
 export default function CalcularFrete({
-  valorFrete,
+  valorProduto,
   setValorFrete,
 }: CalcularFreteProps) {
   const [cep, setCep] = useState("");
@@ -20,13 +23,14 @@ export default function CalcularFrete({
           const { data } = await api.get(
             `https://viacep.com.br/ws/${cep}/json/`
           );
-          //const endereco = response.data;
-          if (data.uf === "GO") {
-            console.log("goias");
-            console.log(data);
+          if (data.erro) {
+            Swal.fire({
+              icon: "warning",
+              title: "Este CEP não existe"
+            })
           }
-
-          setValorFrete("22");
+          const valorFrete = calcularFreteValor({ uf: data.uf, valorProduto });
+          setValorFrete(String(valorFrete));
         }
       } catch (error) {
         console.error("Erro ao calcular o frete:", error);
@@ -35,7 +39,7 @@ export default function CalcularFrete({
     };
 
     calcularFrete();
-  }, [cep, setValorFrete]);
+  }, [cep, setValorFrete, valorProduto]);
 
   const handleChangeCep = (event: ChangeEvent<HTMLInputElement>) => {
     const novoCep = event.target.value;

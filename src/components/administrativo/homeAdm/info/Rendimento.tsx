@@ -1,7 +1,22 @@
 import IpeDinheiro from "@/src/assets/icones/ipe-dinheiro.svg";
+import { api } from "@/src/service/FetchAxios";
+import { valorFormatado } from "@/src/util/formatarValor";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Rendimento() {
+  const [rendimento, setRendimento] = useState();
+
+  useEffect(() => {
+    const fazerRequisicao = async () => {
+      try {
+        const { data } = await api.get("rendimento");
+        setRendimento(data.sum);
+      } catch (error) {}
+    };
+    fazerRequisicao();
+  }, []);
+
   return (
     <div className="flex bg-white w-72 h-28 rounded-xl items-center">
       <div className="flex p-3">
@@ -9,8 +24,8 @@ export default function Rendimento() {
           <Image src={IpeDinheiro} alt="IpePedidos" />
         </div>
         <div>
-          <p className="ml-5 text-gray-400 text-base">Rendimento Total</p>
-          <div className="ml-5 text-xl">22,5</div>
+          <div className="ml-5 text-gray-400 text-base">Vendas Totais</div>
+          <div className="ml-5 text-xl">{valorFormatado(Number(rendimento))}</div>
         </div>
       </div>
     </div>

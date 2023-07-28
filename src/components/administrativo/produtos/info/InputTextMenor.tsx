@@ -18,6 +18,7 @@ export default function InputTextMenor({
           {text}
         </label>
         <input
+          required
           onChange={onChange}
           className="w-full p-2 rounded-lg"
           type="text"

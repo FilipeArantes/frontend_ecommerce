@@ -17,6 +17,7 @@ type InputTextDescProps = {
           {text}
         </label>
         <textarea
+          required
           onChange={onChange}
           className="w-full p-2 rounded-lg h-[19.5rem]"
           id={idName}

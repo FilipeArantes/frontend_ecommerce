@@ -71,9 +71,9 @@ export default function Comentario({ produtoId }: ComentarioProps) {
         <div>
           {comentarios.map((comentario) => (
             <div key={comentario.id}>
-              <p>{comentario.comentario}</p>
-              <p>{comentario.data}</p>
-              <p>{comentario.userId}</p>
+              <div>{comentario.comentario}</div>
+              <div>{comentario.data}</div>
+              <div>{comentario.userId}</div>
             </div>
           ))}
 

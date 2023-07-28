@@ -16,8 +16,8 @@ export default function ValorTotal({
 
   return (
     <div className="flex flex-row justify-between">
-      <p>Total:</p>
-      <p>{valorFormatado(valorTotal)}</p>
+      <div>Total:</div>
+      <div>{valorFormatado(valorTotal)}</div>
     </div>
   );
 }

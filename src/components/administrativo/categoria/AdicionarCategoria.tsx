@@ -16,7 +16,7 @@ export default function AdicionarCategoria({
   const [nomeCategoria, setNomeCategoria] = useState("");
   const [imagemCategoria, setimagemCategoria] = useState<File | null>(null);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async () => {
     const formData = new FormData();
     if (imagemCategoria !== null) {
       formData.append("imagem", imagemCategoria, imagemCategoria.name);
@@ -25,7 +25,6 @@ export default function AdicionarCategoria({
 
     try {
       const response = await api.post("categoria", formData);
-      console.log(response.data);
       setShowModal(false);
       atualizarDados();
     } catch (error) {

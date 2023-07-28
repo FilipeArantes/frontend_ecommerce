@@ -18,10 +18,10 @@ export default function VerProdutos() {
           <div className="cursor-pointer bg-purple w-16 h-16 rounded-full flex justify-center ">
             <Image src={IpeBag} alt="IpeBag" />
           </div>
-          <p className="mt-2 flex cursor-pointer">
+          <div className="mt-2 flex cursor-pointer">
             Ver todos seus produtos
             <Image className="ml-3" src={IpeIr} alt="IpeIr" />
-          </p>
+          </div>
         </div>
       </div>
     </div>

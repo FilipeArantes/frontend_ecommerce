@@ -32,14 +32,14 @@ export default function ValorProdutos({ setValorProduto }: ValorProdutoProps) {
     <div>
       {dados === null ? (
         <div className="flex flex-row justify-between">
-          <p>Valor dos Produtos:</p>
-          <p>{valorFormatado(0)}</p>
+          <div>Valor dos Produtos:</div>
+          <div>{valorFormatado(0)}</div>
         </div>
       ) : (
         <div>
           <div className="flex flex-row justify-between">
-            <p>Valor dos Produtos:</p>
-            <p>{valorFormatado(dados.sum)}</p>
+            <div>Valor dos Produtos:</div>
+            <div>{valorFormatado(dados.sum)}</div>
           </div>
         </div>
       )}

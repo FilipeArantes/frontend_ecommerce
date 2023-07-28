@@ -39,6 +39,7 @@ export default function InputSelect({
         {text}
       </label>
       <select
+        required
         onChange={onChange}
         className="bg-white w-full p-2 rounded-lg"
         name={idName}

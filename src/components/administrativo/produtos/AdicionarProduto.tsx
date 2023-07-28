@@ -43,6 +43,21 @@ export default function AdicionarProduto({
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    if (
+      categoriaSelecionada == "" ||
+      nomeProduto == "" ||
+      descricaoProduto == "" ||
+      precoProduto == "" ||
+      quantidadeProduto == "" ||
+      imagemProduto == null
+    ) {
+      Swal.fire({
+        icon: "warning",
+        text: "Algo está faltando",
+      });
+      return;
+    }
+
     const formData = new FormData();
     if (imagemProduto !== null) {
       formData.append("imagem", imagemProduto, imagemProduto.name);
@@ -57,18 +72,29 @@ export default function AdicionarProduto({
       const response = await api.post("produto", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response);
       atualizarDados();
-      if(response.status = 200) {
+      if ((response.status = 200)) {
         setShowModal(false);
         Swal.fire({
           icon: "success",
-          title: 'Produto adicionado a loja',
+          title: "Produto adicionado a loja",
           timer: 1500,
           showConfirmButton: false,
-        })
+        });
       }
+      setCategoriaSelecionada("");
+      setNomeProduto("");
+      setDescricaoProduto("");
+      setPrecoProduto("");
+      setQuantidadeProduto("");
+      setImagemProduto(null);
     } catch (error) {
+      setCategoriaSelecionada("");
+      setNomeProduto("");
+      setDescricaoProduto("");
+      setPrecoProduto("");
+      setQuantidadeProduto("");
+      setImagemProduto(null);
       console.log(error);
     }
   };
@@ -149,14 +175,14 @@ export default function AdicionarProduto({
                     />
                   </div>
                   <div>
-										<InputSelect
-										  text="Categoria"
-											idName="categoria"
-											onChange={(e) => setCategoriaSelecionada(e.target.value)}
-										/>
+                    <InputSelect
+                      text="Categoria"
+                      idName="categoria"
+                      onChange={(e) => setCategoriaSelecionada(e.target.value)}
+                    />
                   </div>
                   <div>
-										<InputTextDesc
+                    <InputTextDesc
                       text="Descrição"
                       idName="descricao"
                       placeholder="Descricao..."

@@ -24,7 +24,7 @@ export default function TotalPedidos() {
           <Image src={IpePedidos} alt="IpePedidos" />
         </div>
         <div>
-          <p className="ml-5 text-gray-400 text-base">Total de Pedidos</p>
+          <div className="ml-5 text-gray-400 text-base">Total de Pedidos</div>
           <div className="ml-5 text-xl">{count}</div>
         </div>
       </div>

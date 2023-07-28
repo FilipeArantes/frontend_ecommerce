@@ -1,11 +1,9 @@
-import { AuthContext } from "@/src/context/AuthContext";
 import { api } from "@/src/service/FetchAxios";
 import { headers } from "next/dist/client/components/headers";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Banner from "./Banner";
-import ProdutoDetalhes from "./ProdutoDetalhes";
 import { valorFormatado } from "@/src/util/formatarValor";
 
 type ConteudoProps = {
@@ -20,15 +18,22 @@ export default function Produtos() {
   const [dados, setDados] = useState<ConteudoProps[]>([]);
   const router = useRouter();
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const { data } = await api.get("produto");
+        const { data } = await api.get("", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setDados(data);
       } catch (erro) {}
     };
     fazerRequisicao();
-  }, []);
+  }, [token]);
 
   const toProdutos = useCallback(
     (id: number) => {
@@ -61,14 +66,14 @@ export default function Produtos() {
                 />
               </div>
               <div className="flex flex-row justify-between items-center px-1">
-                <p className="">{item.nome}</p>
-                <p className="text-xl text-orange">
+                <div className="">{item.nome}</div>
+                <div className="text-xl text-orange">
                   {valorFormatado(item.preco)}
-                </p>
+                </div>
               </div>
               <div className="text-left max-w-80 flex flex-col flex-1 px-1 flex-wrap">
-                <p className="text-gray-500 text-xs">Descrição</p>
-                <p className="text-xs max-w-xs h-16">{item.descricao}</p>
+                <div className="text-gray-500 text-xs">Descrição</div>
+                <div className="text-xs max-w-xs h-16">{item.descricao}</div>
               </div>
             </div>
           </div>

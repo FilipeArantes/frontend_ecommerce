@@ -5,6 +5,7 @@ import IpeAlterar from "@/src/assets/icones/ipe-alterar-branco.svg";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { api } from "@/src/service/FetchAxios";
+import Swal from "sweetalert2";
 
 type AlterarCategoriaProps = {
   id: number;
@@ -21,7 +22,7 @@ export default function AlterarCategoria({ id , atualizarDados}: AlterarCategori
   const [nomeCategoria, setNomeCategoria] = useState("");
   const [imagemCategoria, setimagemCategoria] = useState("");
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async () => {
     const data: DataProps = {};
 
     if (nomeCategoria !== "") {
@@ -33,8 +34,17 @@ export default function AlterarCategoria({ id , atualizarDados}: AlterarCategori
 
     try {
       const response = await api.put(`categoria/${id}`, data);
-      console.log(response.data);
       atualizarDados();
+      if ((response.status = 200)) {
+        atualizarDados();
+        setShowModal(false);
+        Swal.fire({
+          icon: "success",
+          title: "Categoria alterada com sucesso",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
     } catch (error) {
       console.log(error);
     }

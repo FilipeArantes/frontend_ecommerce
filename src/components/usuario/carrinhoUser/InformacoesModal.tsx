@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import FinalizarCompra from "./FinalizarCompra";
 
-export default function InformacoesModal() {
+type InformacoesModal = {
+  fechar: () => void;
+};
+
+export default function InformacoesModal({ fechar }: InformacoesModal) {
   const [metodoPagamento, setMetodoPagamento] = useState("");
   const [email, setEmail] = useState("");
   const [endereco, setEndereco] = useState("");
@@ -10,13 +14,16 @@ export default function InformacoesModal() {
       <h1 className="text-2xl mb-5">Informações</h1>
       <div className="flex flex-col gap-5">
         <div>
-          <label htmlFor="endereco">Endereço de Entrega <span className="text-xs text-orange">(separe por vírgulas)</span></label>
+          <label htmlFor="endereco">
+            Endereço de Entrega{" "}
+            <span className="text-xs text-orange">(separe por vírgulas)</span>
+          </label>
           <input
             onChange={(e) => setEndereco(e.target.value)}
             className="px-[0.88rem] py-[0.63rem] rounded-xl min-w-[27.5rem]"
             id="endereco"
             type="text"
-            placeholder="Rua, número, bairro, cidade"
+            placeholder="Rua, número, bairro, cidade, estado"
           />
         </div>
         <div className="flex flex-row">
@@ -34,7 +41,7 @@ export default function InformacoesModal() {
             <input
               onChange={(e) => setEmail(e.target.value)}
               className="px-[0.88rem] py-[0.63rem] max-w-[13.1rem] rounded-xl"
-              type="text"
+              type="email"
               id="email"
               placeholder="E-mail..."
             />
@@ -66,7 +73,12 @@ export default function InformacoesModal() {
             Aplicar
           </button>
         </div>
-        <FinalizarCompra email={email} endereco={endereco} metodoPagamento={metodoPagamento}/>
+        <FinalizarCompra
+          closeModal={fechar}
+          email={email}
+          endereco={endereco}
+          metodoPagamento={metodoPagamento}
+        />
       </div>
     </div>
   );

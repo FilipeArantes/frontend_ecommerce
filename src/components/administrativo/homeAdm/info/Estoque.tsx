@@ -19,7 +19,7 @@ export default function Estoque() {
         const jsonCompleto = resposta.data;
         const primeirosDezItens = jsonCompleto.slice(0, 10);
 
-        const itensConvertidos = primeirosDezItens.map((item: any) => ({
+        const itensConvertidos = primeirosDezItens.map((item: object) => ({
           ...item,
         }));
 
@@ -35,7 +35,7 @@ export default function Estoque() {
   return (
     <div className="py-12 pr-10 h-screen w-full bg-slate">
       <div className="bg-white flex flex-col w-estoque max-h-estoqueAltura scrollbar-thin scrollbar-rounded-rounded-lg scrollbar-thumb-slate-200 h-estoqueAltura p-5 rounded-lg ">
-        <p>Estoque</p>
+        <div>Estoque</div>
         <div className="max-h-estoqueAltura overflow-x-hidden overflow-scroll">
           {dados?.map((item, index) => (
             <div
@@ -53,12 +53,12 @@ export default function Estoque() {
               </div>
               <div className="flex gap-60">
                 <div className="text-left min-w-[5rem]">
-                  <p>{item.nome}</p>
-                  <p className="text-xs">{valorFormatado(item.preco)}</p>
+                  <div>{item.nome}</div>
+                  <div className="text-xs">{valorFormatado(item.preco)}</div>
                 </div>
                 <div className="text-center  pr-2">
-                  <p>Quantidade</p>
-                  <p>{item.quantidade_estoque}</p>
+                  <div>Quantidade</div>
+                  <div>{item.quantidade_estoque}</div>
                 </div>
               </div>
             </div>

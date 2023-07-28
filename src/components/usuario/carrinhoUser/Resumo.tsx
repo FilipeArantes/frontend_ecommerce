@@ -16,16 +16,16 @@ export default function Resumo() {
   return (
     <div>
       <div className="bg-white min-h-[27rem] min-w-[27.3rem] flex flex-col rounded-lg p-8">
-        <CalcularFrete valorFrete={frete} setValorFrete={setFrete} />
+        <CalcularFrete valorProduto={Number(valorProduto)} setValorFrete={setFrete} />
         <div className="flex items-center py-4 gap-5">
           <Image className="" src={IpeEmitir} alt="" width={20} />
-          <p className="text-2xl">Resumo</p>
+          <div className="text-2xl">Resumo</div>
         </div>
         <div className="flex flex-col gap-5 mt-3">
           <ValorProdutos setValorProduto={setValorProduto} />
           <div className="flex flex-row justify-between">
-            <p>Frete:</p>
-            <p>{valorFormatado(Number(frete))}</p>
+            <div>Frete:</div>
+            <div>{valorFormatado(Number(frete))}</div>
           </div>
           <ValorTotal
             valor={Number(valorProduto)}

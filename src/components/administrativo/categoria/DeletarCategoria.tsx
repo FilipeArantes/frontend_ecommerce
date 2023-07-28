@@ -16,7 +16,7 @@ export default function DeletarCategoria({
 }: DeletarCategoriaProps) {
   const [showModal, setShowModal] = useState(false);
 
-  const handleDelete = async (e: any) => {
+  const handleDelete = async () => {
     try {
       const requisição = await api.delete(`categoria/${id}`);
       setShowModal(false);
@@ -44,10 +44,10 @@ export default function DeletarCategoria({
           <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
             <div className="z-10 bg-slate p-14 flex items-center flex-col rounded-lg gap-5 shadow-lg">
               <h1 className="text-5xl">Você tem certeza?</h1>
-              <p className="text-2xl">
+              <div className="text-2xl">
                 Você realmente quer excluir a categoria{" "}
                 <span className="uppercase text-orange">{nome}</span> da loja?
-              </p>
+              </div>
               <div className="flex gap-12">
                 <button
                   onClick={handleDelete}

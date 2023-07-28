@@ -50,10 +50,10 @@ export default function ItensModalIndividual() {
           <div key={index}>
             <div className="bg-white flex flex-row items-center p-5 min-w-[35.6rem] rounded-xl justify-between gap">
               <div className="flex flex-col gap-[0.31rem] min-w-[18rem]">
-                <p className="text-2xl">{item.nome}</p>
-                <p className="text-gray-500 text-base">
+                <div className="text-2xl">{item.nome}</div>
+                <div className="text-gray-500 text-base">
                   Valor: {valorFormatado(item.preco)}
-                </p>
+                </div>
               </div>
               <RemoverProduto
                 idCarrinho={item.id_carrinho}

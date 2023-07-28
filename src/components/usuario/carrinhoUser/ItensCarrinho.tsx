@@ -81,11 +81,11 @@ export default function ItensCarrinho() {
                 height={0}
               />
               <div className="flex flex-col gap-6 py-2 min-w-[22rem] max-w-[23rem] flex-wrap">
-                <p className="text-2xl">{item.nome}</p>
-                <p className="text-base">{item.descricao}</p>
+                <div className="text-2xl">{item.nome}</div>
+                <div className="text-base">{item.descricao}</div>
               </div>
               <div className="flex flex-col items-center justify-center gap-2 text-xl">
-                <p className="text-xs mb-2">Quantidade</p>
+                <div className="text-xs mb-2">Quantidade</div>
                 <div className="flex items-center">
                   <button
                     className="text-black px-3 py-1 rounded"
@@ -93,9 +93,9 @@ export default function ItensCarrinho() {
                   >
                     <Image src={IpeSetaESquerda} alt="" />
                   </button>
-                  <p className="min-w-[1.2rem] flex justify-center">
+                  <div className="min-w-[1.2rem] flex justify-center">
                     {item.quantidade}
-                  </p>
+                  </div>
                   <button
                     className="text-black px-3 py-1 rounded"
                     onClick={() => handleIncrement(index)}
@@ -103,16 +103,16 @@ export default function ItensCarrinho() {
                     <Image src={IpeSetaDireita} alt="" />
                   </button>
                 </div>
-                <p className="mt-2">
+                <div className="mt-2">
                   <RemoverProduto
                     idCarrinho={item.id_carrinho}
                     idProduto={item.id_produto}
                     atualizarDados={atualizarDados}
                   />
-                </p>
+                </div>
               </div>
               <div className="flex items-center text-orange ml-24 min-w-[12rem] justify-end ">
-                <p>Valor:{valorFormatado(item.preco_produto)}</p>
+                <div>Valor:{valorFormatado(item.preco_produto)}</div>
               </div>
             </div>
           ))}

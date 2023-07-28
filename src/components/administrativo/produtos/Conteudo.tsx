@@ -55,7 +55,7 @@ export default function Conteudo() {
                 />
               </div>
               <div className="flex flex-row justify-between items-center px-1">
-                <p className="flex gap-2">
+                <div className="flex gap-2">
                   {item.nome}
                   <AlterarProduto
                     id={item.id}
@@ -66,14 +66,14 @@ export default function Conteudo() {
                     id={item.id}
                     atualizarDados={atualizarDados}
                   />
-                </p>
-                <p className="text-xl text-orange">
+                </div>
+                <div className="text-xl text-orange">
                   {valorFormatado(item.preco)}
-                </p>
+                </div>
               </div>
               <div className="text-left max-w-80 flex flex-col flex-1 px-1 flex-wrap">
-                <p className="text-gray-500 text-xs">Descrição</p>
-                <p className="text-xs max-w-xs h-16">{item.descricao}</p>
+                <div className="text-gray-500 text-xs">Descrição</div>
+                <div className="text-xs max-w-xs h-16">{item.descricao}</div>
               </div>
             </div>
           </div>

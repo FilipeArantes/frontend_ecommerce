@@ -65,7 +65,6 @@ export default function AlterarProduto({
 
     try {
       const response = await api.put(`produto/${id}`, data);
-      console.log(response.data);
       setShowModal(false);
       if ((response.status = 200)) {
         atualizarDados();

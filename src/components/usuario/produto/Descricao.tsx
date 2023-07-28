@@ -26,7 +26,7 @@ export default function Descricao({ descricao }: DescProps) {
         </button>
       </div>
       <div className="mt-4 transform transition-transform text-gray-600">
-        {mostrarDescricao && <p>{descricao}</p>}
+        {mostrarDescricao && <div>{descricao}</div>}
       </div>
     </div>
   );

@@ -4,13 +4,12 @@ import Button from "@/src/components/formComps/Button";
 import { api } from "@/src/service/FetchAxios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import { AuthContext,} from "@/src/context/AuthContext";
-import { parseToken } from "@/src/util/tokenUtil";
+import { AuthContext } from "@/src/context/AuthContext";
 
 export default function FormLogin() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const { login }: any = useContext(AuthContext);
+  const { login, loginAdm }: any = useContext(AuthContext);
   const router = useRouter();
 
   const toRegister = React.useCallback(() => {
@@ -40,15 +39,18 @@ export default function FormLogin() {
         email: email,
         senha: senha,
       });
+
+      if (data.me == true) {
+        loginAdm(data.me);
+      }
+
       const emailStore = data.me[0].email;
-      const idStore = data.me[0].id;
+      const idUser = data.me[0].id;
       const nomeUser = data.me[0].nome;
 
       const token = data.token;
       if (typeof token === "string" && token !== "") {
-        console.log(typeof token)
-        login(token, emailStore, idStore, nomeUser);
-        router.push("/home");
+        login(token, emailStore, idUser, nomeUser);
       }
 
       setEmail("");
@@ -56,11 +58,6 @@ export default function FormLogin() {
     } catch (error) {
       setEmail("");
       setSenha("");
-      // Swal.fire({
-      //   icon: "warning",
-      //   title: "Login Inválido",
-      //   text: "Não e possivel realizaaaar login ",
-      // });
     }
   };
 
@@ -74,7 +71,7 @@ export default function FormLogin() {
   return (
     <div className="flex flex-col px-16 pt-20 max-w-2xl">
       <h1 className="text-6xl">Fazer Login</h1>
-      <p className="text-2xl pt-5 pb-8">
+      <div className="text-2xl pt-5 pb-8">
         Não tem uma conta?
         <span
           onClick={toRegister}
@@ -82,7 +79,7 @@ export default function FormLogin() {
         >
           Criar Conta
         </span>
-      </p>
+      </div>
       <Input
         label="E-mail"
         nome="email"

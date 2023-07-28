@@ -46,14 +46,13 @@ export default function Conteudo() {
             <div className="w-80 ">
               <div className="h-[12rem] w-[20rem] flex gap-2 flex-col justify-center items-center">
                 <Image
-                  className="absolute h-[12rem] w-[20rem] rounded-lg"
+                  className="absolute brightness-50 h-[12rem] w-[20rem] rounded-lg"
                   src={item.imagem}
                   alt=""
                   height={1}
                   width={320}
                 />
-
-                <p className="text-white text-2xl z-[1]">{item.nome}</p>
+                <div className="text-white text-2xl z-[1]">{item.nome}</div>
                 <div className="flex gap-2 flex-row z-[1]">
                   <AlterarCategoria
                     id={item.id}

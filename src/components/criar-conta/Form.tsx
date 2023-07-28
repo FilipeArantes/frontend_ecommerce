@@ -19,7 +19,7 @@ export default function Form() {
 
   const router = useRouter();
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async () => {
     if (!nome && !sobrenome && !email && !senha) {
       Swal.fire({
         icon: "error",
@@ -46,12 +46,11 @@ export default function Form() {
       });
 
       const emailStore = data.me[0].email;
-      const idStore = data.me[0].id;
+      const idUser = data.me[0].id;
 
       const token = data.token;
       if (typeof token === "string" && token !== "") {
-        console.log(typeof token);
-        login(token, emailStore, idStore);
+        login(token, emailStore, idUser);
         router.push("/home");
       }
 
@@ -77,14 +76,14 @@ export default function Form() {
   return (
     <div className="flex flex-col px-16 pt-20 max-w-2xl">
       <h1 className="text-6xl">Criar nova conta</h1>
-      <p className="text-2xl pt-5 pb-8">
+      <div className="text-2xl pt-5 pb-8">
         Já tem uma Conta?
         <Link href="/login">
           <span className="transition ease-in duration-50 hover:opacity-80 cursor-pointer text-orange ml-1">
             Fazer Login
           </span>
         </Link>
-      </p>
+      </div>
       <div className="flex">
         <InputNome
           label="Nome"

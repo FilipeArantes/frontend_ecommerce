@@ -8,20 +8,17 @@ type RemoverProdutoProps = {
   idCarrinho: number;
   idProduto: number;
   atualizarDados: () => void;
-  atualizarOpcional?: () => void;
 };
 
 export default function RemoverProduto({
   idCarrinho,
   idProduto,
   atualizarDados,
-  atualizarOpcional,
 }: RemoverProdutoProps) {
   const handleDelete = async (e: any) => {
     try {
       const response = await api.delete(`carrinho/${idCarrinho}/${idProduto}`);
       atualizarDados();
-      atualizarOpcional?.();
       if ((response.status = 200)) {
         Swal.fire({
           icon: "success",
@@ -42,7 +39,7 @@ export default function RemoverProduto({
         className="text-red-500 cursor-pointer flex flex-row items-center text-xs"
       >
         <Image src={IpeApagar} alt="" width={14} />
-        <p>Remover</p>
+        <div>Remover</div>
       </div>
     </div>
   );

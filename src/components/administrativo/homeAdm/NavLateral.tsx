@@ -13,7 +13,8 @@ import IpePerfil from "@/src/assets/icones/ipe-perfil.svg";
 import IpeEngrenagem from "@/src/assets/icones/ipe-engrenagem.svg";
 import IpeSair from "@/src/assets/icones/ipe-sair.svg";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/src/context/AuthContext";
 
 type NavProps = {
   page: string;
@@ -47,8 +48,10 @@ const pageData = [
 ];
 
 export default function NavLateral({ page }: NavProps) {
-  const router = useRouter();
   const [currentPage, setCurrentPage] = useState("");
+  const { logout }: any = useContext(AuthContext);
+
+  const router = useRouter();
 
   const navigateToPage = (path: string) => {
     router.push(path);
@@ -85,10 +88,10 @@ export default function NavLateral({ page }: NavProps) {
           className="cursor-pointer"
           width={220}
         />
-        <p className="text-gray-400 mt-12 text-base">Visão Geral</p>
+        <div className="text-gray-400 mt-12 text-base">Visão Geral</div>
         <div className="mt-6">
           {pageData.map((data) => (
-            <p
+            <div
               key={data.path}
               onClick={() => navigateToPage(data.path)}
               className={`flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200 ${
@@ -102,16 +105,16 @@ export default function NavLateral({ page }: NavProps) {
                 alt={data.label}
               />{" "}
               {data.label}
-            </p>
+            </div>
           ))}
         </div>
-        <p className="text-gray-400 mt-16 text-sm">Ferramentas</p>
+        <div className="text-gray-400 mt-16 text-sm">Ferramentas</div>
         <div>
-          <p className="flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200">
+          <div className="flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200">
             <Image className="mr-5" src={IpePerfil} width={24} alt="IpeCasa" />{" "}
             Perfil
-          </p>
-          <p className="flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200">
+          </div>
+          <div className="flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200">
             <Image
               className="mr-5"
               src={IpeEngrenagem}
@@ -119,8 +122,8 @@ export default function NavLateral({ page }: NavProps) {
               alt="IpeCasa"
             />{" "}
             Configurações
-          </p>
-          <p className="flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200">
+          </div>
+          <div className="flex mt-10 cursor-pointer hover:text-orange transition ease-in duration-200">
             <Image
               className="mr-5"
               src={IpeNotificacao}
@@ -128,12 +131,12 @@ export default function NavLateral({ page }: NavProps) {
               alt="IpeCasa"
             />{" "}
             Mensagens
-          </p>
+          </div>
         </div>
-        <p className="text-vermei cursor-pointer flex mt-44 hover:opacity-90">
+        <div onClick={logout} className="text-vermei cursor-pointer flex mt-44 hover:opacity-90">
           <Image className="mr-5" src={IpeSair} width={24} alt="IpeCasa" />
           Sair do Sistema
-        </p>
+        </div>
       </div>
     </nav>
   );

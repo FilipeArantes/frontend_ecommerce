@@ -1,10 +1,13 @@
 import { api } from "@/src/service/FetchAxios";
+import { isValidEmail } from "@/src/util/ValidarEmail";
+import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
 type FinalizarCompraProps = {
   metodoPagamento: string;
   email: string;
   endereco: string;
+  closeModal: () => void;
 };
 
 type ItensConteudoProps = {
@@ -19,25 +22,28 @@ export default function FinalizarCompra({
   metodoPagamento,
   email,
   endereco,
+  closeModal,
 }: FinalizarCompraProps) {
   const idUsuario =
     typeof window !== "undefined" ? localStorage.getItem("idUser") : null;
 
-  const enderecoDividido = endereco.split(",").map((item) => item.trim());
+  const nomeUser =
+    typeof window !== "undefined" ? localStorage.getItem("nomeUser") : null;
+
+  const router = useRouter();
 
   const handleSubmit = async () => {
-    if (enderecoDividido.length < 4) {
-      Swal.fire({
-        icon: "warning",
-        title: "Está faltando algo",
-        text: "O endereço está incompleto um desses não foi adicionado Rua, Número, Bairro ou Cidade",
-      });
-      return;
-    }
     if (!metodoPagamento) {
       Swal.fire({
         icon: "warning",
         title: "Escolha o método de pagamento",
+      });
+      return;
+    }
+    if (!isValidEmail(email)) {
+      Swal.fire({
+        icon: "warning",
+        title: "E-mail inválido",
       });
       return;
     }
@@ -56,6 +62,7 @@ export default function FinalizarCompra({
 
       const pedido = data.map((item, index) => ({
         produto: {
+          preco: item.preco_produto,
           id_produto: item.id_produto,
           id_usuario: idUsuario,
           id_itens_pedido: itensData.data[index++],
@@ -63,17 +70,30 @@ export default function FinalizarCompra({
           quantidade_comprada: item.quantidade,
           forma_pagamento: metodoPagamento,
           email: email,
+          nomeUser: nomeUser,
         },
-        endereco: {
-          rua: enderecoDividido[0],
-          numero: enderecoDividido[1],
-          bairro: enderecoDividido[2],
-          cidade: enderecoDividido[3],
-        },
+        endereco: endereco
+          ? {
+              id_usuario: idUsuario,
+              endereco: endereco,
+            }
+          : undefined,
       }));
 
       const response = await api.post("pedido", pedido);
-      console.log(response);
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Pedido realizado com sucesso!",
+          text: "Verifique seu e-mail para mais informações",
+        });
+
+        setTimeout(() => {
+          router.push("/home");
+        }, 2500);
+      }
+
+      closeModal();
     } catch (erro) {}
   };
 

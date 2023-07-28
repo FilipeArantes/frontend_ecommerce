@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 interface AuthContextType {
   token: string | null;
   login: (token: string, email: string, idUser: string, nome: string) => void;
+  loginAdm: (token: string) => void;
   logout: () => void;
 }
 
@@ -20,11 +21,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const router = useRouter();
 
-  const login = (token: string, email: string, idUser: string, nome:string) => {
+  const loginAdm = (token: string) => {
+    window.localStorage.setItem("token", token);
+    router.push("administrativo/home");
+  };
+
+  const login = (
+    token: string,
+    email: string,
+    idUser: string,
+    nome: string
+  ) => {
     window.localStorage.setItem("token", token);
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("idUser", idUser);
     window.localStorage.setItem("nomeUser", nome);
+    router.push("/home");
     setToken(token);
   };
 
@@ -39,6 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const authContextValue: AuthContextType = {
     token,
+    loginAdm,
     login,
     logout,
   };

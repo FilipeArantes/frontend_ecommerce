@@ -8,10 +8,10 @@ export default function Banner() {
         <h1 className="text-white text-6xl">
           <span className="text-orange">30%</span> DE DESCONTO EM TODO O SITE!
         </h1>
-        <p className="text-white text-4xl mt-8">
+        <div className="text-white text-4xl mt-8">
           Tá esperando o que?
           <br /> Venha e garanta já o seu produto!
-        </p>
+        </div>
         <div>
           {/* <Image src={IpePessoa} alt="IpePessoa" height={270} /> */}
         </div>
