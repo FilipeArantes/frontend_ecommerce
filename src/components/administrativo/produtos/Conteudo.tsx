@@ -22,7 +22,7 @@ export default function Conteudo() {
 
   const atualizarDados = useCallback(async () => {
     try {
-      const { data } = await api.get("produto", {
+      const { data } = await api.get("", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,7 +34,7 @@ export default function Conteudo() {
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const { data } = await api.get("produto", {
+        const { data } = await api.get("", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

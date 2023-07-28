@@ -19,7 +19,7 @@ export default function Estoque() {
   useEffect(() => {
     const fazerRequisicao = async () => {
       try {
-        const resposta = await api.get("produto", {
+        const resposta = await api.get("", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

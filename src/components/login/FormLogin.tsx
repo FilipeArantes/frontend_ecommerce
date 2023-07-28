@@ -44,7 +44,7 @@ export default function FormLogin() {
       });
 
       if (data.me == true) {
-        loginAdm(data.me);
+        loginAdm(data.token);
         console.log('admin')
         return;
       }
